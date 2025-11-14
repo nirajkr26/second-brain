@@ -1,11 +1,12 @@
 import express from "express";
 import { config } from "dotenv";
 config();
-import { connect, ContentModel, UserModel } from "./db.js";
+import { connect, ContentModel, LinkModel, UserModel } from "./db.js";
 import jwt from "jsonwebtoken";
 import { JWT_PASSWORD } from "./config.js";
 import { userMiddleware } from "./middleware.js";
 import bcrypt from "bcrypt";
+import { random } from "./utils.js";
 const app = express();
 
 
@@ -98,12 +99,65 @@ app.delete("/api/v1/content", userMiddleware, async (req, res) => {
 })
 
 app.post("/api/v1/brain/share", userMiddleware, async (req, res) => {
+    const share = req.body.share;
+    if (share) {
+        const existingLink = await LinkModel.findOne({
+            userId: req.userId
+        })
+
+        if (existingLink) {
+            res.json({
+                message: existingLink.hash
+            })
+            return;
+        }
+
+        const hash = random(10)
+        await LinkModel.create({
+            userId: req.userId,
+            hash: hash
+        })
+        res.json({
+            message: hash
+        })
+
+    } else {
+        await LinkModel.deleteOne({
+            userId: req.userId
+        })
+        res.json({
+            message: "Removed shareable link"
+        })
+    }
 
 
 })
 
 app.get("/api/v1/brain/:shareLink", async (req, res) => {
+    const hash = req.params.shareLink;
+    const link = await LinkModel.findOne({
+        hash
+    })
 
+    if (!link) {
+        res.status(411).json({
+            message: "Sorry!! Link not found"
+        })
+        return;
+    }
+
+    const content = await ContentModel.find({
+        userId: link.userId
+    })
+
+    const user = await UserModel.findOne({
+        _id: link.userId
+    })
+
+    res.json({
+        username: user?.username,
+        content: content
+    })
 })
 
 connect().then(() => {
