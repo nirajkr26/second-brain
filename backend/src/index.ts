@@ -163,6 +163,20 @@ app.get("/api/v1/brain/:shareLink", async (req, res) => {
     })
 })
 
+app.get("/api/v1/validate", async (req, res) => {
+    try {
+        const token = req.headers.authorization;
+        if (token) {
+            const decoded = jwt.verify(token, JWT_PASSWORD)
+            res.json({ valid: true })
+        } else {
+            res.status(401).json({ message: "Missing token" })
+        }
+    } catch (error) {
+        res.status(403).json({ valid: false })
+    }
+})
+
 connect().then(() => {
     const port = process.env.PORT;
     app.listen(port, () => { console.log("server running on port: " + port) })

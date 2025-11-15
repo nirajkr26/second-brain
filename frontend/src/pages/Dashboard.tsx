@@ -6,7 +6,7 @@ import { PlusIcon } from "../icons/PlusIcon"
 import { ShareIcon } from "../icons/ShareIcon"
 import Sidebar from "../components/Sidebar"
 import { useContent } from "../hooks/useContent"
-import { BACKEND_URL, FRONTEND_URL } from "../config"
+import { BACKEND_URL, FRONTEND_URL } from "../config/config"
 import axios from "axios"
 
 

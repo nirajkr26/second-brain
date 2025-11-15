@@ -2,7 +2,7 @@ import axios from "axios";
 import Button from "../components/Button"
 import { Input } from "../components/Input"
 import { BrainIcon } from "../icons/BrainIcon"
-import { BACKEND_URL } from "../config";
+import { BACKEND_URL } from "../config/config";
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
