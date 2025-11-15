@@ -2,9 +2,10 @@ import axios from "axios";
 import Button from "../components/Button"
 import { Input } from "../components/Input"
 import { BrainIcon } from "../icons/BrainIcon"
-import { BACKEND_URL } from "../config/config";
+import { BACKEND_URL } from "../utils/config";
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { validate } from "../utils/validateToken";
 
 export const Signin = () => {
     const usernameRef = useRef<HTMLInputElement>(null);
@@ -28,19 +29,22 @@ export const Signin = () => {
     }
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (token) navigate("/dashboard")
+        (async () => {
+            const isValid = await validate();
+            if (isValid) navigate("/dashboard")
+        })()
     }, [])
 
     return (
         <div className="h-screen bg-purple-50 flex justify-center items-center">
             <div className="text-3xl font-bolds items-center gap-3 pt-4  flex position fixed top-40">{<BrainIcon />} BRAINLY</div>
-            <div className="bg-white p-4 rounded border flex  flex-col gap-2 border-gray-200">
+            <div className="bg-white p-4 rounded border flex  flex-col gap-2 items-center border-gray-200">
                 <div>
                     <Input reference={usernameRef} type="text" placeholder="Username" />
                     <Input reference={passwordRef} type="password" placeholder="Password" />
                 </div>
                 <Button text="Sign In" onClick={signin} variant="primary" fullWidth={true} />
+                <p className="font-mono text-sm text-gray-500 cursor-pointer" onClick={() => navigate("/signup")}>New User? Sign Up Here</p>
             </div>
         </div>
     )

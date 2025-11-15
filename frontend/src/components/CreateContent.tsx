@@ -3,7 +3,7 @@ import { CutIcon } from "../icons/CutIcon"
 import { SaveIcon } from "../icons/SaveIcon"
 import Button from "./Button"
 import { Input } from "./Input"
-import { BACKEND_URL } from "../config/config"
+import { BACKEND_URL } from "../utils/config"
 import axios from "axios"
 
 enum ContentType {

@@ -9,6 +9,7 @@ interface CardProps {
 }
 
 const Card = ({ title, link, type }: CardProps) => {
+
     return (
         <div className="rounded-md p-4 min-h-48 min-w-72 flex flex-col gap-4 bg-white outline-slate-200 max-w-72 border border-slate-200">
             <div className="flex justify-between text-md">
@@ -20,7 +21,9 @@ const Card = ({ title, link, type }: CardProps) => {
                     <a href={link} target="_blank">
                         <ShareIcon />
                     </a>
-                    <DeleteIcon />
+                    <p>
+                        <DeleteIcon />
+                    </p>
                 </div>
             </div>
             <div className="">

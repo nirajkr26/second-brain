@@ -6,16 +6,26 @@ import { PlusIcon } from "../icons/PlusIcon"
 import { ShareIcon } from "../icons/ShareIcon"
 import Sidebar from "../components/Sidebar"
 import { useContent } from "../hooks/useContent"
-import { BACKEND_URL, FRONTEND_URL } from "../config/config"
+import { BACKEND_URL, FRONTEND_URL } from "../utils/config"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 
 function Dashboard() {
     const [modalOpen, setModalOpen] = useState(false);
     const { contents, fetchData } = useContent();
+    const navigate = useNavigate();
 
     useEffect(() => {
-        fetchData();
+        const token = localStorage.getItem("token");
+        if (!token) {
+            navigate("/signin")
+        }
+    }, [])
+
+    useEffect(() => {
+        if (!modalOpen)
+            fetchData();
     }, [modalOpen])
 
     const shareBrain = async () => {
@@ -46,8 +56,8 @@ function Dashboard() {
 
 
                 <div className="flex flex-wrap gap-4 pt-4">
-                    {contents.map(({ type, link, title }) =>
-                        <Card type={type} link={link} title={title} />
+                    {contents.map(({ type, link, title }, index) =>
+                        <Card type={type} link={link} key={index} title={title} />
                     )}
 
                 </div>
