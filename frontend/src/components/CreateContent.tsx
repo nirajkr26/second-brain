@@ -6,15 +6,13 @@ import { Input } from "./Input"
 import { BACKEND_URL } from "../utils/config"
 import axios from "axios"
 
-enum ContentType {
-    Youtube = "youtube",
-    Twitter = "twitter"
-}
+type ContentType = "youtube" | "twitter"
+
 
 export const CreateContent = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
     const titleRef = useRef<HTMLInputElement>(null);
     const linkRef = useRef<HTMLInputElement>(null);
-    const [type, setType] = useState(ContentType.Youtube)
+    const [type, setType] = useState<ContentType>("youtube")
 
     const addContent = async () => {
         const title = titleRef.current?.value
@@ -47,9 +45,9 @@ export const CreateContent = ({ open, onClose }: { open: boolean; onClose: () =>
                     </div>
                     <div className="text-center pb-1">TYPE</div>
                     <div className="flex justify-evenly">
-                        <Button text="Youtube" variant={type == "youtube" ? "primary" : "secondary"} onClick={() => { setType(ContentType.Youtube) }} />
+                        <Button text="Youtube" variant={type == "youtube" ? "primary" : "secondary"} onClick={() => { setType("youtube") }} />
 
-                        <Button text="Twitter" variant={type == "twitter" ? "primary" : "secondary"} onClick={() => { setType(ContentType.Twitter) }} />
+                        <Button text="Twitter" variant={type == "twitter" ? "primary" : "secondary"} onClick={() => { setType("twitter") }} />
                     </div>
 
                     <div className="flex pt-2 justify-center">
