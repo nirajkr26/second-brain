@@ -10,7 +10,12 @@ import { random } from "./utils.js";
 import cors from "cors"
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: "https://brainly-memory.vercel.app",
+    credentials: true,
+    methods: ["GET", "POST", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));
 app.use(express.json());
 
 app.post("/api/v1/signup", async (req, res) => {
