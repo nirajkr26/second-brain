@@ -7,10 +7,10 @@ import { JWT_PASSWORD } from "./config.js";
 import { userMiddleware } from "./middleware.js";
 import bcrypt from "bcrypt";
 import { random } from "./utils.js";
+import cors from "cors"
 const app = express();
 
-
-
+app.use(cors());
 app.use(express.json());
 
 app.post("/api/v1/signup", async (req, res) => {
@@ -58,7 +58,9 @@ app.post("/api/v1/signin", async (req, res) => {
             return res.status(403).json({ message: "Incorrect credentials" });
         }
 
-        const token = jwt.sign({ id: existingUser._id }, JWT_PASSWORD);
+        const token = jwt.sign({ id: existingUser._id }, JWT_PASSWORD, {
+            expiresIn: '24h'
+        });
 
         res.setHeader("Authorization", token);
         res.json({ token });
@@ -69,10 +71,11 @@ app.post("/api/v1/signin", async (req, res) => {
 });
 
 app.post("/api/v1/content", userMiddleware, async (req, res) => {
-    const { link, title } = req.body;
+    const { link, title, type } = req.body;
     await ContentModel.create({
         link,
         title,
+        type,
         userId: req.userId,
         tags: []
     })
@@ -107,7 +110,7 @@ app.post("/api/v1/brain/share", userMiddleware, async (req, res) => {
 
         if (existingLink) {
             res.json({
-                message: existingLink.hash
+                hash: existingLink.hash
             })
             return;
         }
@@ -118,7 +121,7 @@ app.post("/api/v1/brain/share", userMiddleware, async (req, res) => {
             hash: hash
         })
         res.json({
-            message: hash
+            hash: hash
         })
 
     } else {
