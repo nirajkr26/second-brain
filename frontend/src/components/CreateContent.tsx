@@ -1,14 +1,39 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { CutIcon } from "../icons/CutIcon"
 import { SaveIcon } from "../icons/SaveIcon"
 import Button from "./Button"
+import { Input } from "./Input"
+import { BACKEND_URL } from "../config"
+import axios from "axios"
 
-export const CreateContent = ({ open, onClose }) => {
-    const [title, setTitle] = useState("")
-    const [link, setLink] = useState("")
+enum ContentType {
+    Youtube = "youtube",
+    Twitter = "twitter"
+}
+
+export const CreateContent = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
+    const titleRef = useRef<HTMLInputElement>(null);
+    const linkRef = useRef<HTMLInputElement>(null);
+    const [type, setType] = useState(ContentType.Youtube)
+
+    const addContent = async () => {
+        const title = titleRef.current?.value
+        const link = linkRef.current?.value
+
+        await axios.post(BACKEND_URL + "/api/v1/content", {
+            title,
+            link,
+            type
+        }, {
+            headers: {
+                "Authorization": localStorage.getItem("token")
+            }
+        })
+        onClose();
+    }
 
     return (<div>
-        {open && <div className="h-screen w-screen bg-purple-700/25 fixed top-0 left-0 flex justify-center">
+        {open && <div className="h-screen w-screen bg-purple-900/25 fixed top-0 left-0 flex transition-all justify-center">
             <div className="flex flex-col justify-center ">
                 <span className="bg-white p-4 rounded-md">
                     <div className="flex justify-end">
@@ -17,11 +42,18 @@ export const CreateContent = ({ open, onClose }) => {
                         </div>
                     </div>
                     <div>
-                        <Input placeholder="Title" />
-                        <Input placeholder="Link" />
+                        <Input reference={titleRef} type="text" placeholder="Title" />
+                        <Input reference={linkRef} type="text" placeholder="Link" />
                     </div>
-                    <div className="flex justify-center">
-                        <Button variant="primary" text="Submit" startIcon={<SaveIcon />} />
+                    <div className="text-center pb-1">TYPE</div>
+                    <div className="flex justify-evenly">
+                        <Button text="Youtube" variant={type == "youtube" ? "primary" : "secondary"} onClick={() => { setType(ContentType.Youtube) }} />
+
+                        <Button text="Twitter" variant={type == "twitter" ? "primary" : "secondary"} onClick={() => { setType(ContentType.Twitter) }} />
+                    </div>
+
+                    <div className="flex pt-2 justify-center">
+                        <Button onClick={addContent} variant="primary" fullWidth={true} text="Save" startIcon={<SaveIcon />} />
                     </div>
                 </span>
             </div>
@@ -30,8 +62,4 @@ export const CreateContent = ({ open, onClose }) => {
     )
 }
 
-function Input({ placeholder, onChange }: { onChange: () => void }) {
-    return (<div>
-        <input type="text" placeholder={placeholder} className=" border rounded px-4 py-2 m-2" onChange={onChange}></input>
-    </div>)
-}
+
