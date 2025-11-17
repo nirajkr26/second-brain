@@ -50,14 +50,14 @@ function Dashboard() {
             <div className=" ">
                 <Sidebar />
             </div>
-            <div className="p-4 ml-60 min-h-screen bg-purple-50">
+            <div className="p-4 ml-12 md:ml-50 min-h-screen bg-red-50">
                 <div className="flex justify-end gap-4">
                     <Button text="Share Brain" variant="secondary" startIcon={<ShareIcon />} onClick={shareBrain} />
                     <Button onClick={() => setModalOpen(true)} text="Add Content" variant="primary" startIcon={<PlusIcon />} />
                 </div>
 
 
-                <div className="flex flex-wrap gap-4 pt-4">
+                <div className="flex flex-wrap gap-4 pt-4 items-start">
                     {contents.map(({ type, link, title }, index) =>
                         <Card type={type} link={link} key={index} title={title} />
                     )}

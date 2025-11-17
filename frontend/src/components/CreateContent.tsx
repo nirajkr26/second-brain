@@ -7,7 +7,7 @@ import { BACKEND_URL } from "../utils/config"
 import axios from "axios"
 import { toast } from "react-toastify"
 
-type ContentType = "youtube" | "twitter"
+type ContentType = "youtube" | "twitter" | "text"
 
 
 export const CreateContent = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
@@ -39,7 +39,7 @@ export const CreateContent = ({ open, onClose }: { open: boolean; onClose: () =>
     }
 
     return (<div>
-        {open && <div className="h-screen w-screen bg-purple-900/25 fixed top-0 left-0 flex transition-all justify-center">
+        {open && <div className="h-screen w-screen bg-red-900/25 fixed top-0 left-0 flex transition-all justify-center">
             <div className="flex flex-col justify-center ">
                 <span className="bg-white p-4 rounded-md">
                     <div className="flex justify-end">
@@ -48,13 +48,13 @@ export const CreateContent = ({ open, onClose }: { open: boolean; onClose: () =>
                         </div>
                     </div>
                     <div>
-                        <Input reference={titleRef} type="text" placeholder="Title" />
-                        <Input reference={linkRef} type="text" placeholder="Link" />
+                        <Input reference={titleRef} type="text" placeholder="Title" customClass=" sm:w-84" />
+                        <Input reference={linkRef} type="text" placeholder={type == "text" ? "Text" : "Link"} customClass=" sm:w-84" />
                     </div>
                     <div className="text-center pb-1">TYPE</div>
                     <div className="flex justify-evenly">
+                        <Button text="Text" variant={type == "text" ? "primary" : "secondary"} onClick={() => { setType("text") }} />
                         <Button text="Youtube" variant={type == "youtube" ? "primary" : "secondary"} onClick={() => { setType("youtube") }} />
-
                         <Button text="Twitter" variant={type == "twitter" ? "primary" : "secondary"} onClick={() => { setType("twitter") }} />
                     </div>
 

@@ -36,7 +36,7 @@ const ShareBrain = () => {
     }, [])
 
     return (
-        <div className="min-h-screen flex flex-col bg-purple-50">
+        <div className="min-h-screen flex flex-col bg-red-50">
             <div className="text-3xl font-bolds items-center gap-3 pt-4 flex justify-center cursor-pointer" onClick={() => navigate("/")}>{<BrainIcon />} BRAINLY</div>
             {loading ? <div className="flex grow items-center justify-center font-semibold text-3xl">
                 Loading...

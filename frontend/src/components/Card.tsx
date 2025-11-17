@@ -5,7 +5,7 @@ import { TerminalIcon } from "../icons/TerminalIcon";
 interface CardProps {
     title: string;
     link: string;
-    type: "youtube" | "twitter";
+    type: "youtube" | "twitter" | "text";
 }
 
 const Card = ({ title, link, type }: CardProps) => {
@@ -32,6 +32,8 @@ const Card = ({ title, link, type }: CardProps) => {
                 {type == "twitter" && <blockquote className="twitter-tweet">
                     <a href={link.replace("x.com", "twitter.com")}></a>
                 </blockquote>}
+
+                {type == "text" && <div className="text-sm overflow-y-auto max-h-44">{link}</div>}
 
             </div>
 

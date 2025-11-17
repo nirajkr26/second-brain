@@ -10,9 +10,9 @@ interface ButtonProps {
 }
 
 const variantClasses = {
-    "primary": "bg-purple-700 text-white hover:bg-purple-800 font-light",
-    "secondary": "bg-purple-200 text-purple-700 hover:bg-purple-300 hover:text-purple-900 font-light",
-    "outline": "border-2 border-purple-700 hover:bg-purple-200 text-black font-semibold" 
+    "primary": "bg-red-700 text-white hover:bg-red-800 font-light",
+    "secondary": "bg-red-200 text-red-700 hover:bg-red-300 hover:text-red-900 font-light",
+    "outline": "border-2 border-red-700 hover:bg-red-200 text-black font-semibold" 
 }
 
 const defaultStyles = "px-4 flex items-center gap-1 justify-center py-2 rounded-md  cursor-pointer";

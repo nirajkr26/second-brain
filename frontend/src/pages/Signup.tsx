@@ -37,7 +37,7 @@ export const Signup = () => {
     }, [])
 
     return (
-        <div className="h-screen bg-purple-50 flex justify-center items-center">
+        <div className="h-screen bg-red-50 flex justify-center items-center">
             <div className="text-3xl font-bolds items-center gap-3 pt-4  flex position fixed top-40">{<BrainIcon />} BRAINLY</div>
             <div className="bg-white p-4 rounded border flex  flex-col gap-2 items-center border-gray-200">
                 <div>
