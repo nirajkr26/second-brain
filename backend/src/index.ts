@@ -16,6 +16,7 @@ app.use(cors({
     methods: ["GET", "POST", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
 app.use(express.json());
 
 app.post("/api/v1/signup", async (req, res) => {
@@ -180,6 +181,12 @@ app.get("/api/v1/validate", async (req, res) => {
     } catch (error) {
         res.status(403).json({ valid: false })
     }
+})
+
+app.get("/api/v1/health", (req, res) => {
+    res.status(200).json({
+        timestamp: new Date().toISOString(),
+    });
 })
 
 connect().then(() => {
