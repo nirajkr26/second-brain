@@ -6,6 +6,7 @@ import { BACKEND_URL } from "../utils/config";
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { validate } from "../utils/validateToken";
+import { toast } from "react-toastify";
 
 export const Signin = () => {
     const usernameRef = useRef<HTMLInputElement>(null);
@@ -13,19 +14,25 @@ export const Signin = () => {
     const navigate = useNavigate();
 
     const signin = async () => {
-        const username = usernameRef.current?.value;
-        const password = passwordRef.current?.value;
-        console.log(username)
-        const response = await axios.post(BACKEND_URL + "/api/v1/signin", {
-            username,
-            password
-        })
+        try {
+            const username = usernameRef.current?.value;
+            const password = passwordRef.current?.value;
 
-        const jwt = response.data.token;
-        localStorage.setItem("token", jwt);
+            const response = await axios.post(BACKEND_URL + "/api/v1/signin", {
+                username,
+                password
+            })
 
-        if (jwt)
-            navigate("/dashboard")
+            const jwt = response.data.token;
+            localStorage.setItem("token", jwt);
+
+            if (jwt){
+                toast.success("Logged In")
+                navigate("/dashboard")
+            }
+        } catch (err: any) {
+            toast.error(err.response.data?.message || "Some error occured");
+        }
     }
 
     useEffect(() => {

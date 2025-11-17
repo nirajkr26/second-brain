@@ -6,6 +6,7 @@ import { BACKEND_URL } from "../utils/config"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { validate } from "../utils/validateToken"
+import { toast } from "react-toastify"
 
 export const Signup = () => {
     const usernameRef = useRef<HTMLInputElement>(null);
@@ -13,14 +14,19 @@ export const Signup = () => {
     const navigate = useNavigate()
 
     const signup = async () => {
-        const username = usernameRef.current?.value;
-        const password = passwordRef.current?.value;
+        try {
+            const username = usernameRef.current?.value;
+            const password = passwordRef.current?.value;
 
-        await axios.post(BACKEND_URL + "/api/v1/signup", {
-            username,
-            password
-        })
-        navigate("/signin")
+            await axios.post(BACKEND_URL + "/api/v1/signup", {
+                username,
+                password
+            })
+            toast.success("User Registered")
+            navigate("/signin")
+        } catch (err: any) {
+            toast.error(err.response.data?.message || "Some error occured")
+        }
     }
 
     useEffect(() => {

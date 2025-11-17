@@ -9,6 +9,7 @@ import { useContent } from "../hooks/useContent"
 import { BACKEND_URL, FRONTEND_URL } from "../utils/config"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 
 
 function Dashboard() {
@@ -19,6 +20,7 @@ function Dashboard() {
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (!token) {
+            toast.warning("Please Login")
             navigate("/signin")
         }
     }, [])
@@ -40,7 +42,7 @@ function Dashboard() {
         const shareUrl = FRONTEND_URL + "/share/" + response.data.hash
 
         navigator.clipboard.writeText(shareUrl);
-        alert("Link copied to clipboard");
+        toast.success("Link copied to clipboard");
     }
 
     return (

@@ -5,6 +5,7 @@ import { Signup } from "./pages/Signup"
 import ShareBrain from "./pages/ShareBrain"
 import Landing from "./pages/Landing"
 import PageNotFound from "./pages/PageNotFound"
+import { ToastContainer, Zoom } from "react-toastify"
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/share/:shareLink" element={<ShareBrain />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
+      <ToastContainer position="top-right" autoClose={2000} closeOnClick pauseOnHover={false} transition={Zoom} />
     </BrowserRouter>
   )
 }

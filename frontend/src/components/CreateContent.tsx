@@ -5,6 +5,7 @@ import Button from "./Button"
 import { Input } from "./Input"
 import { BACKEND_URL } from "../utils/config"
 import axios from "axios"
+import { toast } from "react-toastify"
 
 type ContentType = "youtube" | "twitter"
 
@@ -15,19 +16,26 @@ export const CreateContent = ({ open, onClose }: { open: boolean; onClose: () =>
     const [type, setType] = useState<ContentType>("youtube")
 
     const addContent = async () => {
-        const title = titleRef.current?.value
-        const link = linkRef.current?.value
+        try {
 
-        await axios.post(BACKEND_URL + "/api/v1/content", {
-            title,
-            link,
-            type
-        }, {
-            headers: {
-                "Authorization": localStorage.getItem("token")
-            }
-        })
-        onClose();
+            const title = titleRef.current?.value
+            const link = linkRef.current?.value
+
+            await axios.post(BACKEND_URL + "/api/v1/content", {
+                title,
+                link,
+                type
+            }, {
+                headers: {
+                    "Authorization": localStorage.getItem("token")
+                }
+            })
+
+            toast.success("Content Added")
+            onClose();
+        } catch (err: any) {
+            toast.error(err.response.data?.message)
+        }
     }
 
     return (<div>
