@@ -43,7 +43,7 @@ const ShareBrain = () => {
             </div> : (expired ? <div className="flex grow items-center justify-center font-semibold text-3xl">
                 {expired}
             </div> : <div>
-                <p className="flex p-3 justify-center text-xl font-mono">You are viewing {user}'s Brain</p>
+                <p className="flex p-3 justify-center text-xl font-mono">{user}'s Brain</p>
                 <div className="flex justify-center gap-4 p-3 flex-wrap  ">
                     {content.map(({ title, link, type }, index) => <Card key={index} title={title} link={link} type={type} />)}
                 </div>

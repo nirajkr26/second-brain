@@ -21,7 +21,7 @@ function Dashboard() {
         const token = localStorage.getItem("token");
         if (!token) {
             toast.warning("Please Login")
-            navigate("/signin")
+            navigate("/login")
         }
     }, [])
 

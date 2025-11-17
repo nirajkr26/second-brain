@@ -18,8 +18,8 @@ export const CreateContent = ({ open, onClose }: { open: boolean; onClose: () =>
     const addContent = async () => {
         try {
 
-            const title = titleRef.current?.value
-            const link = linkRef.current?.value
+            const title = titleRef.current?.value.trim()
+            const link = linkRef.current?.value.trim()
 
             await axios.post(BACKEND_URL + "/api/v1/content", {
                 title,

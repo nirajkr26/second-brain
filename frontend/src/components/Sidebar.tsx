@@ -5,6 +5,7 @@ import { YoutubeIcon } from "../icons/YoutubeIcon"
 import SidebarItem from "./SidebarItem"
 import { LogoutIcon } from "../icons/LogoutIcon"
 import { toast } from "react-toastify"
+import { ProfileIcon } from "../icons/ProfileIcon"
 
 
 const Sidebar = () => {
@@ -13,7 +14,7 @@ const Sidebar = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     toast.success("Logged out")
-    navigate("/signin")
+    navigate("/login")
   }
 
   return (
@@ -25,7 +26,8 @@ const Sidebar = () => {
           <SidebarItem text="Twitter" icon={<TwitterIcon />} />
           <SidebarItem text="Youtube" icon={<YoutubeIcon />} />
         </div>
-        <div className=" text-center fixed bottom-3">
+        <div className=" text-center fixed flex flex-col gap-2 bottom-3">
+          <SidebarItem onClick={()=>navigate("/profile")} text="Profile" icon={<ProfileIcon />} />
           <SidebarItem onClick={handleLogout} text="Logout" icon={<LogoutIcon />} />
         </div>
       </div>
